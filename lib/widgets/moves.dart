@@ -10,12 +10,16 @@ class Move extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
-      child: Text(
-        "Moves: $move",
-        style: const TextStyle(
-            color: Colors.white,
-            decoration: TextDecoration.none,
-            fontSize: 18
+      child: SizedBox(
+        height: 20,
+        width: 100,
+        child: Text(
+          "Moves: $move",
+          style: const TextStyle(
+              color: Colors.white,
+              decoration: TextDecoration.none,
+              fontSize: 18
+          ),
         ),
       ),
     );

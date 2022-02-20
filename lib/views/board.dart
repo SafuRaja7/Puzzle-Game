@@ -28,7 +28,7 @@ class _BoardState extends State<Board> {
   @override
   Widget build(BuildContext context) {
     timer ??
-        Timer.periodic(duration, (Timer t) {
+        Timer.periodic(duration, (Timer timer) {
           startTime();
         });
 

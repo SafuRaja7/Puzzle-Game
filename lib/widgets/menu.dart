@@ -15,7 +15,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      
       children: <Widget>[
         ResetButton(reset, "Reset"),
         Move(move),

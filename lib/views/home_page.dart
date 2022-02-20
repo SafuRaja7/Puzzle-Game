@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle_challange/cubit/startgame_cubit.dart';
 import '../Animations/text_animation.dart';
 
 class HomePage extends StatelessWidget {
@@ -32,34 +33,78 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 100,
+                height: 300,
               ),
               SizedBox(
                 height: 50,
                 width: 200,
-                child: ElevatedButton(
-                  onPressed: (() => Navigator.pushNamed(context, '/second')),
-                  child: const Text("Start Game"),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    side: const BorderSide(
-                      width: 1,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
+                child: BlocConsumer<StartgameCubit, StartgameState>(
+                  listener: (context, state) {
+                    if (state is StartGameSuccess) {
+                      Navigator.pushNamed(context, '/second');
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is StartGameLoading) {
+                      return ElevatedButton(
+                        onPressed: () {},
+                        child: const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 160, 201, 235)),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          side: const BorderSide(
+                            width: 1,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      );
+                    }
+                    return ElevatedButton(
+                      onPressed: () async {
+                        final gametCubit =
+                            BlocProvider.of<StartgameCubit>(context);
+                        await gametCubit.start();
+                      },
+                      child: const Text('Play Game'),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        side: const BorderSide(
+                          width: 1,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  height: 200,
-                  width: 400,
-                  child: Image.network(
-                      'https://docs.flutter.dev/assets/images/dash/Dashatars.png'),
-                ),
-              )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      height: 200,
+                      width: 400,
+                      child: Image.network(
+                          'https://docs.flutter.dev/assets/images/dash/Dashatars.png'),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      height: 200,
+                      width: 400,
+                      child: Image.network(
+                          'https://docs.flutter.dev/assets/images/dash/Dashatars.png'),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
